@@ -1,7 +1,5 @@
 
 
-using System.ComponentModel.DataAnnotations;
-
 namespace CachingRedis.Models;
 public class Driver
 {

@@ -3,15 +3,17 @@ using System.Text.Json;
 using StackExchange.Redis;
 
 namespace CachingRedis.Services;
-public class CacheService : ICacheService
+public class CacheService : ICacheService // we implement the interface ICacheService
 {
 
-    private IDatabase _cacheDb;
-    public CacheService()
-    {
-        var redis = ConnectionMultiplexer.Connect("localhost:6379");
-        _cacheDb = redis.GetDatabase();
-    }
+
+    private readonly IDatabase _cacheDb; // we create a private field of type IDatabase coming from StackExchange.Redis
+
+     public CacheService(IConfiguration configuration)
+        {
+            var redis = ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnectionString"));
+            _cacheDb = redis.GetDatabase();
+        }
 
     public T GetData<T>(string key)
     {
